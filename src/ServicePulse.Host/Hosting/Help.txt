@@ -23,10 +23,8 @@ EXAMPLES:
      --serviceName="MyServicePulse" 
      --displayName="My Pulse"
      --description="Service for monitoring" 
-     --username="corp\serviceuser"
-     --password="p@ssw0rd!"
 	 --url="http://localhost:9090"
-	 --serviceControlUrl="http://localhost:8080/api"
+	 --serviceControlUrl="http://servicecontrol.gcmlp.com:33333/api/"
 
    ServicePulse.Host.exe --uninstall --serviceName="MyServicePulse"
 

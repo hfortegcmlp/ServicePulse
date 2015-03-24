@@ -3,5 +3,5 @@
 var SC = SC || {};
 
 SC.config = {
-    service_control_url: 'http://localhost:33333/api'
+    service_control_url: 'http://servicecontrol.gcmlp.com:33333/api/'
 };

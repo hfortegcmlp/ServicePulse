@@ -26,22 +26,41 @@ angular.module('failedMessages', [])
 
             $scope.loadingData = true;
             
-            serviceControlService.getFailedMessages($routeParams.sort, page).then(function (response) {
-                $scope.model.failedMessages = $scope.model.failedMessages.concat(response.data);
-                $scope.model.total = response.total;
+            if ($routeParams.endpoint) {
+                serviceControlService.getFailedMessagesForEndpoint($routeParams.endpoint, page).then(function (response) {
+                    $scope.model.failedMessages = $scope.model.failedMessages.concat(response.data);
+                    $scope.model.total = response.total;
 
-                if ($scope.model.failedMessages.length >= $scope.model.total) {
-                    $scope.disableLoadingData = true;
-                }
+                    if ($scope.model.failedMessages.length >= $scope.model.total) {
+                        $scope.disableLoadingData = true;
+                    }
+
+                    $scope.loadingData = false;
+                    page++;
+                });
+
+            } else {
+                serviceControlService.getFailedMessages($routeParams.sort, page).then(function (response) {
+                    $scope.model.failedMessages = $scope.model.failedMessages.concat(response.data);
+                    $scope.model.total = response.total;
+
+                    if ($scope.model.failedMessages.length >= $scope.model.total) {
+                        $scope.disableLoadingData = true;
+                    }
                 
-                $scope.loadingData = false;
-                page++;
-            });
+                    $scope.loadingData = false;
+                    page++;
+                });
+            }
             
             serviceControlService.getFailedMessageStats().then(function (failedMessagesStats) {
                 $scope.model.failedMessagesStats = failedMessagesStats;
             });
         };
+
+        $scope.showClearFilter = function () {
+            return $routeParams.endpoint;
+        }
 
         $scope.togglePanel = function (row, panelnum) {
 
@@ -80,6 +99,20 @@ angular.module('failedMessages', [])
                 $scope.model.selectedIds.push(row.id);
             } else {
                 $scope.model.selectedIds.splice($scope.model.selectedIds.indexOf(row.id), 1);
+            }
+        };
+
+        $scope.selectVisible = function (row) {
+            for (var i = 0; i < $scope.model.failedMessages.length; i++) {
+                $scope.model.failedMessages[i].selected = !$scope.model.failedMessages[i].selected;
+                $scope.model.selectedIds.push($scope.model.failedMessages[i].id);
+            }
+        };
+
+        $scope.unSelectVisible = function (row) {
+            for (var i = 0; i < $scope.model.failedMessages.length; i++) {
+                $scope.model.failedMessages[i].selected = !$scope.model.failedMessages[i].selected;
+                $scope.model.selectedIds = [];
             }
         };
 

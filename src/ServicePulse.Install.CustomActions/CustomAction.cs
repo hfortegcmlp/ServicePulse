@@ -122,7 +122,7 @@
                 Log(session, "Start custom action ReadServiceControlUrlFromConfigJS");
                 var targetPath = session.Get("APPDIR");
                 var configJsPath = Path.Combine(targetPath, @"app\config.js");
-                var uri = @"http://localhost:33333/api/";
+                var uri = @"http://servicecontrol.gcmlp.com:33333/api/";
 
                 if (File.Exists(configJsPath))
                 {

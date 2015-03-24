@@ -34,6 +34,16 @@ angular.module('services.serviceControlService', [])
                 });
             };
 
+            this.getFailedMessagesForEndpoint = function (endpoint, page) {
+                var url = scConfig.service_control_url + 'endpoints/' + endpoint + '/errors?status=unresolved&page=' + page;
+                return $http.get(url).then(function (response) {
+                    return {
+                        data: response.data,
+                        total: response.headers('Total-Count')
+                    };
+                });
+            };
+
             this.getMessageBody = function(messageId) {
                 return $http.get(scConfig.service_control_url + '/messages/' + messageId + "/body").then(function(response) {
                     return {
